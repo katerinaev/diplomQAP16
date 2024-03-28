@@ -13,3 +13,7 @@ class HcmPage(BasePage):
     @allure.step("Assert HCM page is open")
     def assert_that_hcm_page_open(self):
         assert self.wait_for(self.main_locators.SOLUTION_HERO)
+
+    @allure.step("Assert Sidebar text")
+    def assert_sidebar_text(self, locator, text):
+        assert self.wait_for(locator) == text

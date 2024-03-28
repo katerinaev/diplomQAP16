@@ -55,11 +55,31 @@ class BasePage():
     def assert_text(self, text):
         assert self.wait_for(f'//*[contains(text(), "{text}")]'), "Text is not visible"
 
+    @allure.step("Assert url is open")
+    def assert_url(self, url):
+        assert self.driver.current_url == url
+
     def force_click(self, element):
         self.driver.execute_script("arguments[0].click();", element)
 
-#     def scroll_to(self):
-#         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    def wait_url(self, locator, time_out=10):
+        try:
+            return WebDriverWait(self.driver, time_out).until(
+                EC.url_to_be(locator)
+            )
+        except TimeoutException:
+            assert False, f'Url {locator} doesnt found'
+
+    def scroll_to_(self):
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+    def scroll_to(self, locator):
+        element = self.get_element(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+
+    def get_text(self, locator):
+        element = self.driver.get_element(locator)
+        return element.text
 #
 #     def click_on(self, locator):
 #         element = self.get_locator_by_class(locator)

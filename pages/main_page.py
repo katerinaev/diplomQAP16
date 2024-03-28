@@ -28,6 +28,18 @@ class MainPage(BasePage):
     def click_on_search(self):
         self.wait_and_click(self.main_locators.SEARCH_INPUT)
 
+    def scroll_to_solution_wrapper(self):
+        self.scroll_to(self.main_locators.SOLUTION_WRAPPER)
+
+    def scroll_to_product_overview(self):
+        self.scroll_to(self.main_locators.PRODUCT_OVERVIEW)
+
+    def click_on_product_name(self, element):
+        self.wait_and_click(element)
+
+    def click_on_product_tab(self, element):
+        self.wait_and_click(element)
+
     def click_on_bot_message(self):
         element = self.wait_for(self.main_locators.FRED_MESSAGE)
         self.force_click(element)
@@ -64,3 +76,10 @@ class MainPage(BasePage):
     def search_text(self, text):
         self.fill(self.main_locators.SEARCH_INPUT, text)
         # self.wait_and_click(self.main_locators.SUBMIT)
+
+    def search_url(self, url):
+        self.fill(self.main_locators.SEARCH_INPUT, url)
+
+    @allure.step("Assert title is visible")
+    def assert_title(self, locator):
+        assert self.wait_for(locator)
